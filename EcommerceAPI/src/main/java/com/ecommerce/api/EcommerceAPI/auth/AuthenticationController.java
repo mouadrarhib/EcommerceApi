@@ -1,10 +1,11 @@
 package com.ecommerce.api.EcommerceAPI.auth;
 
+import com.ecommerce.api.EcommerceAPI.helpers.ApiResponse;
+import com.ecommerce.api.EcommerceAPI.helpers.ResponseHelper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +18,26 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> register(
+    public ResponseEntity<ApiResponse<String>> register(
             @RequestBody @Valid RegistrationRequest request
     ) throws MessagingException {
         service.register(request);
-        return ResponseEntity.accepted().build();
+        return ResponseHelper.ok("Registration successful. Please check your email for activation.");
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        AuthenticationResponse response = service.authenticate(request);
+        return ResponseHelper.ok("Authentication successful", response);
     }
+
     @GetMapping("/activate-account")
-    public void confirm(
+    public ResponseEntity<ApiResponse<String>> confirm(
             @RequestParam String token
     ) throws MessagingException {
         service.activateAccount(token);
+        return ResponseHelper.ok("Account activated successfully");
     }
-
-
 }
