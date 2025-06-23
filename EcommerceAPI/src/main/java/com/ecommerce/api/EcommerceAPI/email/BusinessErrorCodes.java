@@ -1,4 +1,4 @@
-package com.ecommerce.api.EcommerceAPI.handler;
+package com.ecommerce.api.EcommerceAPI.email;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
