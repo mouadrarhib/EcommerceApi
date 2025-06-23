@@ -32,6 +32,14 @@ public class ResponseHelper {
         return ResponseEntity.badRequest().body(ApiResponse.error(message, errorCode));
     }
 
+    public static ResponseEntity<ApiResponse<?>> unauthorized(String message) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(message));
+    }
+
+    public static ResponseEntity<ApiResponse<?>> unauthorized(String message, Integer errorCode) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(message, errorCode));
+    }
+
     public static ResponseEntity<ApiResponse<?>> notFound(String message) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(message));
     }
