@@ -32,22 +32,6 @@ public class ResponseHelper {
         return ResponseEntity.badRequest().body(ApiResponse.error(message, errorCode));
     }
 
-    public static ResponseEntity<ApiResponse<?>> unauthorized(String message) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(message));
-    }
-
-    public static ResponseEntity<ApiResponse<?>> unauthorized(String message, Integer errorCode) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error(message, errorCode));
-    }
-
-    public static ResponseEntity<ApiResponse<?>> notFound(String message) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(message));
-    }
-
-    public static ResponseEntity<ApiResponse<?>> notFound(String message, Integer errorCode) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(message, errorCode));
-    }
-
     public static ResponseEntity<ApiResponse<?>> error(String message, HttpStatus status) {
         return ResponseEntity.status(status).body(ApiResponse.error(message));
     }
@@ -61,4 +45,9 @@ public class ResponseHelper {
         return ResponseEntity.badRequest()
                 .body(ApiResponse.error(message, null, errors));
     }
+
+    public static <T> ResponseEntity<ApiResponse<T>> notFoundTyped(String message) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body((ApiResponse<T>) ApiResponse.error(message, null, null));
+    }
+
 }
