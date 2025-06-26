@@ -20,7 +20,7 @@ public class ReviewService {
     private final ProductService productService;
 
     public ReviewService(ReviewRepository reviewRepository, RatingRepository ratingRepository,
-                         UserRepository userRepository, ProductService productService) {
+                        ProductService productService) {
         this.reviewRepository = reviewRepository;
         this.ratingRepository = ratingRepository;
         this.productService = productService;
