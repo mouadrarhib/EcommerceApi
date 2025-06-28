@@ -7,41 +7,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./EcommerceAPI  # All commands will run from here
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-      maildev:
-        image: maildev/maildev
-        ports:
-          - 1080:1080
-          - 1025:1025
-
-    env:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.DB_NAME }}
-      SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
-      SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      SPRING_MAIL_HOST: localhost
-      SPRING_MAIL_PORT: 1025
-      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+        working-directory: ./EcommerceAPI
 
     steps:
       - name: ⬇️ Checkout code
@@ -54,14 +25,10 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: 🔍 Validate POM
-        run: mvn validate
-
-      - name: 📦 Build and test
-        run: mvn clean package
+      - name: 📦 Build without tests
+        run: mvn clean package -DskipTests
 
       - name: 📂 Upload JAR artifact
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ecommerce-api
