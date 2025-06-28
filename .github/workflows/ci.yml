@@ -10,6 +10,10 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./EcommerceAPI  # All commands will run from here
+
     services:
       postgres:
         image: postgres
@@ -50,8 +54,8 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: 🔍 Navigate to project directory
-        run: cd EcommerceAPI
+      - name: 🔍 Validate POM
+        run: mvn validate
 
       - name: 📦 Build and test
         run: mvn clean package
