@@ -25,7 +25,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-      # Add MailDev to match your docker-compose
       maildev:
         image: maildev/maildev
         ports:
@@ -36,10 +35,8 @@ jobs:
       SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.DB_NAME }}
       SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
       SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      # Add MailDev config to match your docker-compose
       SPRING_MAIL_HOST: localhost
       SPRING_MAIL_PORT: 1025
-      # Recommended for tests
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
 
     steps:
@@ -53,15 +50,15 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: 🔍 Validate POM
-        run: mvn validate
+      - name: 🔍 Navigate to project directory
+        run: cd EcommerceAPI
 
       - name: 📦 Build and test
         run: mvn clean package
 
       - name: 📂 Upload JAR artifact
-        if: success()  # Only upload if previous steps succeeded
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: ecommerce-api
-          path: target/*.jar
+          path: EcommerceAPI/target/*.jar
