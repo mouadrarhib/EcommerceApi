@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     services:
@@ -25,10 +25,22 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+      # Add MailDev to match your docker-compose
+      maildev:
+        image: maildev/maildev
+        ports:
+          - 1080:1080
+          - 1025:1025
+
     env:
       SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.DB_NAME }}
       SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
       SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      # Add MailDev config to match your docker-compose
+      SPRING_MAIL_HOST: localhost
+      SPRING_MAIL_PORT: 1025
+      # Recommended for tests
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
 
     steps:
       - name: ⬇️ Checkout code
@@ -39,15 +51,17 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'maven'  # Enable dependency caching
 
-      - name: 📦 Build with Maven
-        run: mvn clean install -DskipTests
+      - name: 🔍 Validate POM
+        run: mvn validate
 
-      - name: ✅ Run tests
-        run: mvn test
+      - name: 📦 Build and test
+        run: mvn clean package  # Run tests as part of package phase
 
       - name: 📂 Upload JAR artifact
+        if: success()  # Only upload if previous steps succeeded
         uses: actions/upload-artifact@v4
         with:
-          name: ecommerce-api-jar
+          name: ecommerce-api
           path: target/*.jar
