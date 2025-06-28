@@ -51,13 +51,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven'  # Enable dependency caching
+          cache: 'maven'
 
       - name: 🔍 Validate POM
         run: mvn validate
 
       - name: 📦 Build and test
-        run: mvn clean package  # Run tests as part of package phase
+        run: mvn clean package 
 
       - name: 📂 Upload JAR artifact
         if: success()  # Only upload if previous steps succeeded
