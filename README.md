@@ -63,7 +63,7 @@ EcommerceAPI/
 │   └── Dockerfile
 ├── .github/workflows/      # CI/CD pipeline
 │   └── ci.yml
-├── docker-compose.yml      # Docker services (Postgres, Maildev)
+├── docker-compose.yml      # Docker services (Postgres, Maildev, Ecommerce-Api)
 └── README.md
 ```
 
@@ -88,7 +88,7 @@ It will spin up:
 
 ---
 
-## 🔐 Environment Variables (Set in GitHub Secrets or .env)
+## 🔐 Environment Variables (Set in GitHub Secrets or .env or application-secrets.yml)
 ```
 DB_USERNAME=username
 DB_PASSWORD=password
@@ -103,7 +103,7 @@ SPRING_MAIL_PORT=1025
 
 > Available via Swagger UI once app is running:
 ```
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8088/swagger-ui/index.html
 ```
 
 ---
@@ -113,9 +113,7 @@ http://localhost:8080/swagger-ui/index.html
 Implemented via GitHub Actions:
 - Run tests on each push
 - Build and package the JAR
-- Build and push Docker image (optional)
-- (Optional) Auto-deploy to EC2 or Render
-
+- Build and push Docker image
 ---
 
 ## 📬 Contact
@@ -127,7 +125,3 @@ Implemented via GitHub Actions:
 
 ---
 
-## 📸 Bonus (if you add)
-- ✅ Demo video (Loom or YouTube)
-- ✅ ERD diagram of DB schema
-- ✅ Architecture diagram (Controllers → Services → Repos → DB)
