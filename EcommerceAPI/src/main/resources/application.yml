@@ -18,8 +18,8 @@ spring:
   mail:
     host: localhost
     port: 1025
-    username: ali
-    password: ali
+    username: mouad
+    password: mouad
     properties:
       mail:
         smtp:
