@@ -1,4 +1,3 @@
-
 # 🛒 Ecommerce API – Spring Boot Backend
 
 A complete RESTful backend for an E-commerce platform built with **Java Spring Boot**.  
@@ -124,4 +123,26 @@ Implemented via GitHub Actions:
 🔗 [GitHub](https://github.com/MouadRarhib) • [Portfolio](https://mouad-rarhib-portfolio-bwvs.vercel.app/) • [LinkedIn](https://linkedin.com/in/rarhibmouad)
 
 ---
+
+## 🖼️ Screenshots
+
+Here are some screenshots showcasing key parts of the development and deployment process:
+
+### ✅ Spring Boot API running in the console
+![✅ Spring Boot API running in the console](Screens/console.png)
+
+### 🐳 Docker Desktop showing active containers
+![🐳 Docker Desktop showing active containers](Screens/docker desktop.png)
+
+### 📦 DockerHub with the pushed image
+![📦 DockerHub with the pushed image](Screens/dockerhub.png)
+
+### 🚀 GitHub Actions CI/CD pipeline execution
+![🚀 GitHub Actions CI/CD pipeline execution](Screens/Pipeline.png)
+
+### 📬 Postman request and response for product API
+![📬 Postman request and response for product API](Screens/postman.png)
+
+### 📘 Swagger API documentation interface
+![📘 Swagger API documentation interface](Screens/swagger.png)
 
